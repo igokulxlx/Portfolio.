@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gokul V | Cinematic Portfolio</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
+<style>
+html{scroll-behavior:smooth;}
+body{margin:0;font-family:'Poppins',sans-serif;background:#050505;color:white;overflow-x:hidden;}
+
+/* background */
+#bg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;}
+
+/* nav */
+nav{display:flex;justify-content:space-between;padding:20px 8%;position:fixed;width:100%;
+background:rgba(0,0,0,0.6);backdrop-filter:blur(10px);z-index:10;}
+nav h2{color:#ff2e2e;}
+nav a{color:white;text-decoration:none;margin-left:25px;font-size:14px;}
+
+/* hero */
+.hero{height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;}
+.hero h1{font-size:60px;letter-spacing:4px;}
+.hero p{color:#aaa;}
+
+/* section */
+section{padding:120px 10%;opacity:0;transform:translateY(60px);transition:all 1s ease;}
+section.show{opacity:1;transform:translateY(0);}
+.title{font-size:34px;margin-bottom:40px;color:#ff2e2e;}
+
+/* cards */
+.projects{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:30px;}
+.card{background:#111;padding:40px;border-radius:10px;transform-style:preserve-3d;
+transition:transform 0.6s;cursor:pointer;}
+.card:hover{transform:rotateY(12deg) rotateX(10deg) scale(1.05);}
+
+/* before after */
+.compare{position:relative;max-width:600px;margin:auto;}
+.compare img{width:100%;display:block;border-radius:10px;}
+.overlay{position:absolute;top:0;left:0;overflow:hidden;width:50%;}
+.slider{position:absolute;top:0;bottom:0;left:50%;width:3px;background:#ff2e2e;cursor:ew-resize;}
+
+/* ai */
+.ai-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;}
+.ai-box{background:#121212;padding:25px;border-radius:8px;transition:0.4s;}
+.ai-box:hover{transform:translateY(-8px);background:#1c1c1c;}
+
+/* footer */
+footer{text-align:center;padding:40px;color:#666;}
+</style>
+</head>
+
+<body>
+
+<canvas id="bg"></canvas>
+
+<nav>
+<h2>GOKUL</h2>
+<div>
+<a href="#about">About</a>
+<a href="#projects">Projects</a>
+<a href="#vfx">VFX</a>
+<a href="#ai">AI</a>
+<a href="#contact">Contact</a>
+</div>
+</nav>
+
+<div class="hero">
+<div>
+<h1>GOKUL V</h1>
+<p>3D Artist | Video Editor | Visual Designer</p>
+</div>
+</div>
+
+<section id="about">
+<h2 class="title">About</h2>
+<p>
+Creative 3D artist and video editor specializing in cinematic visuals, VFX,
+and digital storytelling. Skilled in compositing, rotoscoping, matte painting,
+and high-end visual effects production.
+</p>
+</section>
+
+<section id="projects">
+<h2 class="title">3D Projects</h2>
+<div class="projects">
+<div class="card">3D Product Render</div>
+<div class="card">Cinematic Bike Ad</div>
+<div class="card">Game Environment</div>
+<div class="card">VFX Scene</div>
+</div>
+</section>
+
+<section id="vfx">
+<h2 class="title">Before / After VFX</h2>
+<div class="compare">
+<img src="before.jpg">
+<div class="overlay">
+<img src="after.jpg">
+</div>
+<div class="slider"></div>
+</div>
+</section>
+
+<section id="ai">
+<h2 class="title">AI Projects</h2>
+<div class="ai-grid">
+<div class="ai-box">AI Image Generation</div>
+<div class="ai-box">AI Video Workflow</div>
+<div class="ai-box">ComfyUI Pipeline</div>
+<div class="ai-box">AI Assisted VFX</div>
+</div>
+</section>
+
+<section id="contact">
+<h2 class="title">Contact</h2>
+<p>
+Instagram: <a href="https://instagram.com/igokulxlx">@igokulxlx</a><br><br>
+Email: <a href="mailto:igokulxlx@gmail.com">igokulxlx@gmail.com</a>
+</p>
+</section>
+
+<footer>© 2026 Gokul V</footer>
+
+<script>
+const canvas=document.getElementById("bg");
+const ctx=canvas.getContext("2d");
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
+let particles=[];
+for(let i=0;i<80;i++){
+particles.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,r:Math.random()*2});
+}
+
+function animate(){
+ctx.clearRect(0,0,canvas.width,canvas.height);
+particles.forEach(p=>{
+ctx.beginPath();
+ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+ctx.fillStyle="white";
+ctx.fill();
+p.y+=0.3;
+if(p.y>canvas.height)p.y=0;
+});
+requestAnimationFrame(animate);
+}
+animate();
+
+const sections=document.querySelectorAll("section");
+window.addEventListener("scroll",()=>{
+sections.forEach(sec=>{
+const top=sec.getBoundingClientRect().top;
+if(top<window.innerHeight-100){sec.classList.add("show");}
+});
+});
+
+const slider=document.querySelector(".slider");
+const overlay=document.querySelector(".overlay");
+
+slider.onmousedown=function(){
+window.onmousemove=function(e){
+let rect=slider.parentElement.getBoundingClientRect();
+let pos=e.clientX-rect.left;
+overlay.style.width=pos+"px";
+slider.style.left=pos+"px";
+}
+}
+
+window.onmouseup=function(){window.onmousemove=null;}
+</script>
+
+</body>
+</html>

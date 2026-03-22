@@ -8,7 +8,7 @@ Creative 3D artist and video editor specializing in cinematic visuals, VFX, and 
 
 View my portfolio website here:
 
-https://yourusername.github.io
+https://igokulxlx.github.io
 
 👨‍🎨 About Me
 
